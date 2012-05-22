@@ -5,7 +5,7 @@
 <link rel="stylesheet" type="text/css"
     href='${contextRoot}/css/bootstrap/bootstrap.min.css'>
 <script type="text/javascript"
-    src='${contextRoot}/js/jquery-1.7.1.min.js'></script>
+    src='${contextRoot}/js/dojo/dojo.js'></script>
 <title>${param.title}</title>
 <style type="text/css">
 html,body {
