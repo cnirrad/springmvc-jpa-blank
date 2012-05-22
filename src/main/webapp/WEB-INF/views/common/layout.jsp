@@ -2,51 +2,25 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet" type="text/css"
-    href='${contextRoot}/css/bootstrap/bootstrap.min.css'>
+<link rel="stylesheet" href='${contextRoot}/js/dijit/themes/claro/claro.css'>
+
+<script>
+    dojoConfig= {
+        has: {
+            "dojo-firebug": true,
+            "dojo-debug-messages": true
+        },
+        async: true
+    };
+</script>    
+    
 <script type="text/javascript"
     src='${contextRoot}/js/dojo/dojo.js'></script>
 <title>${param.title}</title>
-<style type="text/css">
-html,body {
-    background-color: #eee;
-}
 
-
-.container>footer p {
-    text-align: center; /* center align it with the container */
-}
-
-.container {
-    width: 820px;
-}
-
-/* The white background content wrapper */
-.content {
-    background-color: #fff;
-    padding: 20px;
-    margin: 0 -20px;
-    -webkit-border-radius: 0 0 6px 6px;
-    -moz-border-radius: 0 0 6px 6px;
-    border-radius: 0 0 6px 6px;
-    -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .15);
-    -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, .15);
-    box-shadow: 0 1px 2px rgba(0, 0, 0, .15);
-}
-/* Page header tweaks */
-.page-header {
-    background-color: #f5f5f5;
-    padding: 20px 20px 10px;
-    margin: -20px -20px 20px;
-}
-
-.row {
-    padding: 20px;
-}
-</style>
 </head>
 
-<body>
+<body class="claro">
     <div class="container">
         <div class="content">
             <div class="page-header">

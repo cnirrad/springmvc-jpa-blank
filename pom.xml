@@ -180,6 +180,11 @@
             <version>1.2.2</version>
         </dependency>
 
+        <dependency>
+          <groupId>org.codehaus.jackson</groupId>
+          <artifactId>jackson-mapper-asl</artifactId>
+          <version>1.9.7</version>
+        </dependency>
 
         <dependency>
             <groupId>jp.sf.amateras.functions</groupId>

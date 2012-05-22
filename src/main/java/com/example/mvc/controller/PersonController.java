@@ -1,11 +1,14 @@
 package com.example.mvc.controller;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.mvc.entity.Person;
 import com.example.mvc.service.PersonService;
@@ -22,7 +26,7 @@ import com.example.mvc.service.PersonService;
 @RequestMapping("/person")
 public class PersonController {
     protected static final int DEFAULT_PAGE_NUM = 0;
-    protected static final int DEFAULT_PAGE_SIZE = 5;
+    protected static final int DEFAULT_PAGE_SIZE = 10;
 
     @Inject
     protected PersonService personService;
@@ -88,6 +92,13 @@ public class PersonController {
         personService.deleteById(id);
 
         return "redirect:/person/list";
+    }
+    
+    @RequestMapping(value = "/query", method=RequestMethod.GET)
+    public @ResponseBody HttpEntity<List<Person>> query() {
+        Page<Person> page = personService.findAll(0, DEFAULT_PAGE_SIZE);
+        
+        return new HttpEntity<List<Person>>(page.getContent());
     }
 
 }
