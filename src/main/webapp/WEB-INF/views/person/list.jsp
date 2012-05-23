@@ -2,27 +2,31 @@
     <c:param name="title" value="PERSON LIST" />
     <c:param name="body">
     	<link rel="stylesheet" type="text/css" 
-    		href="${contextRoot}/js/dojox/grid/resources/Grid.css" />
+    		href="${contextRoot}/js/dojox/grid/enhanced/resources/claro/EnhancedGrid.css" />
 		<link rel="stylesheet" type="text/css" 
-			href="${contextRoot}/js/dojox/grid/resources/claroGrid.css" />
+			href="${contextRoot}/js/dojox/grid/enhanced/resources/EnhancedGrid_rtl.css" />
 			
         <p>
             <a href='${contextRoot}/person/form/' class="btn btn-info">CREATE</a>
         </p>
         <script>
-        	require(["dojox/grid/DataGrid", 
+        	require(["dojox/grid/EnhancedGrid", 
         	         "dojo/store/JsonRest",
         	         "dojo/data/ObjectStore",
+        	         "dojox/grid/enhanced/plugins/Pagination",
         	         "dojo/domReady!"],
-        		function(DataGrid, JsonRest, ObjectStore) {
+        		function(EnhancedGrid, JsonRest, ObjectStore) {
         			var jsonRest = new JsonRest({target: "${contextRoot}/person/query"});
         			var store = new ObjectStore({objectStore: jsonRest});
         		
-        			var grid = new DataGrid({
+        			var grid = new EnhancedGrid({
         				store: store,
         				query: {id: "*"},
         				autoHeight: 10,
         				autoWidth: true,
+        				plugins: {
+        					pagination: true
+        				},        				
         				structure: [
         				        { name: "Id", field: "id"},
         				        { name: "Name", field: "name"},

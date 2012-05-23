@@ -1,8 +1,10 @@
 package com.example.mvc.service.impl;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -12,11 +14,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.transaction.AfterTransaction;
-import org.springframework.test.context.transaction.BeforeTransaction;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.mvc.entity.Person;
@@ -74,6 +75,26 @@ public class PersonServiceImplTest {
         assertEquals(4, p.getTotalPages());
         assertEquals(20, p.getTotalElements());
     }
+    
+    @Test
+    public void testFindAllWithSort() {
+        Sort sort = new Sort(Direction.DESC, "age");
+        Page<Person> page = personService.findAll(sort, 0, 10);
+        List<Person> persons = page.getContent();
+        assertNotNull(persons);
+        assertEquals(10, persons.size());
+        assertEquals(10, page.getNumberOfElements());
+        assertEquals(0, page.getNumber());
+        assertEquals(10, page.getSize());
+        assertEquals(2, page.getTotalPages());
+        assertEquals(20, page.getTotalElements());
+        
+        int lastAge = Integer.MAX_VALUE;
+        for (Person p : persons) {
+            assertTrue(p.getAge() < lastAge);
+            lastAge = p.getAge();
+        }
+    }
 
     @Test
     public void testFindByNameLike() throws Exception {
@@ -99,7 +120,8 @@ public class PersonServiceImplTest {
 
     @Test
     public void testInsert() {
-        Person lastOne = personService.findAll(0, 1).getContent().get(0);
+        Person lastOne = personService.findAll(
+                new Sort(Direction.DESC, "id"), 0, 1).getContent().get(0);
 
         Person p = new Person();
         p.setAge(20);

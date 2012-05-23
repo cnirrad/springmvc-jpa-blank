@@ -21,9 +21,24 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     @Transactional(readOnly = true)
+    public long count() {
+        return personRepository.count();
+    }
+    
+    @Override
+    @Transactional(readOnly = true)
     public Page<Person> findAll(int page, int size) {
         Pageable pageable = new PageRequest(page, size, new Sort(
-                Direction.DESC, "id"));
+                Direction.ASC, "id"));
+        Page<Person> persons = personRepository.findAll(pageable);
+        return persons;
+    }
+    
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<Person> findAll(Sort sort, int page, int pageSize) {
+        Pageable pageable = new PageRequest(page, pageSize, sort);
         Page<Person> persons = personRepository.findAll(pageable);
         return persons;
     }
@@ -62,5 +77,6 @@ public class PersonServiceImpl implements PersonService {
     public void deleteById(Integer id) {
         personRepository.delete(id);
     }
+
 
 }
